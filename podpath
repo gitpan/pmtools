@@ -1,0 +1,52 @@
+#!/usr/bin/env perl
+# podpath - print the path to the pod
+
+for (@ARGV) {
+    if ( /^perl/ ) {
+	system("$^X -S stdpods | grep $_");
+    } else {
+	system("$^X -S pmpath $_");
+    } 
+} 
+
+__END__
+
+=head1 NAME
+
+podpath - print the path to the pod
+
+=head1 DESCRIPTION
+
+This is just a front-end that calls either I<stdpods>
+or I<pmpath> depending on what it looks like.  It works
+on both regular the standard podpages and the module ones.
+
+=head1 EXAMPLES
+
+    $ podpath Cwd
+    /usr/local/devperl/lib/5.00554/Cwd.pm
+
+It works with alternate installations, too:
+
+    $ devperl -S podpath perlfunc
+    /usr/local/devperl/lib/5.00554/pod/perlfunc.pod
+
+    $ oldperl -S podpath IO::Handle
+    /usr/lib/perl5/i386-linux/5.00404/IO/Handle.pm
+
+    $ filsperl -S podpath Thread
+    /usr/local/filsperl/lib/5.00554/i686-linux-thread/Thread.pm
+
+=head1 SEE ALSO
+
+stdpods(1),
+pmpath(1),
+perlmodlib(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

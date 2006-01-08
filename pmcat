@@ -1,0 +1,50 @@
+#!/usr/bin/env perl
+# pmcat -- page a module file
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+BEGIN { die "usage: $0 module ...\n" unless @ARGV }
+
+use FindBin qw($Bin);
+
+unless ($pager = $ENV{PAGER}) {
+    require Config;
+    $pager = $Config::Config{"pager"} || "more";
+} 
+
+exec "$pager `$^X -S $Bin/pmpath @ARGV`";
+
+__END__
+
+=head1 NAME
+
+pmcat - page through a module file
+
+=head1 DESCRIPTION
+
+Given a module name, figure out the path name and send
+that to the user's pager.
+
+    $ pmcat CGI
+
+This works also on alternate installed versions of Perl:
+
+    $ oldperl -S pmcat strict
+
+    $ filsperl -S pmcat Threads
+
+This command is mostly here for people too lazy to type
+
+    $ more `pmpath CGI` 
+
+=head1 SEE ALSO
+
+pmpath(1)
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

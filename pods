@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+# pods - print out all pod paths
+#
+# this is a perl program not a shell script
+# so that we can use the correct perl 
+
+system $^X, "-S", "stdpods";
+system $^X, "-S", "pminst", "-l";
+
+__END__
+
+=head1 NAME
+
+pods - print out all pod paths
+
+=head1 DESCRIPTION
+
+This program is a front end to print out the paths of all the standard
+podpages and the modules.
+
+=head1 SEE ALSO
+
+faqpods(1), modpods(1), sitepods(1), podpath(1), pminst(1), and stdpod(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

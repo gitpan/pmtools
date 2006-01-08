@@ -1,0 +1,74 @@
+#!/usr/bin/env perl
+# pmfunc -- show a function 
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+BEGIN { die "usage: $0 module ...\n" unless @ARGV }
+
+use FindBin qw($Bin);
+
+$errors = 0;
+
+for $arg (@ARGV) { 
+    my($module, $function) = $arg =~ /(\w.*)::(\w+)$/;
+    $file = `$^X -S $Bin/pmpath $module`;
+    if ($?) {
+	$errors++;
+	next;
+    } 
+    chomp $file;
+
+    system $^X, '-ne', 
+	'$ok++,print if /^sub\s+' . $function . '\b/ .. /^}\s*$/;' 
+	. ' END { $? = ($ok == 0) }',
+	$file;
+
+    $errors++ if $?;
+}
+
+exit ($errors != 0);
+
+__END__
+
+=head1 NAME
+
+pmfunc - cat out a function from a module
+
+=head1 DESCRIPTION
+
+Given a fully-qualified function, this program opens
+up the file and attempts to cat out the source for 
+that function.
+
+=head1 EXAMPLES
+
+    $ pmfunc Cwd::getcwd
+    sub getcwd
+    {
+	abs_path('.');
+    }
+
+=head1 RESTRICTIONS
+
+Only subroutines that are defined in the normal fashion are seen, since
+a simple pattern-match is what does the extraction.  Those loaded other
+ways, such as via AUTOLOAD, typeglob aliasing, or in an C<eval>, will
+all necessarily be missed.
+
+This is mostly here for people who are too lazy to type
+
+    sed '/^sub getcwd/,/}/p' `pmpath Cwd`
+or
+    perl -ne 'print if /^sub\s+getcwd\b/ .. /}/' `pmpath Cwd`
+
+=head1 RESTRICTIONS
+
+=head1 SEE ALSO
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

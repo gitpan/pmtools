@@ -1,0 +1,73 @@
+#!/usr/bin/env perl
+# pmpath -- show path to a perl module
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+
+$errors = 0;
+
+for $module (@ARGV) {
+    eval "require $module";
+    if ($@) {
+	$@ =~ s/at \(eval.*$//;
+	warn "$0: $@";
+	$errors++;
+	next;
+    } 
+    for ($shortpath = $module) {
+	s{::}{/}g;
+	s/$/.pm/;
+    }
+    # print "$module is in " if @ARGV > 1;
+    if (defined($fullpath = $INC{$shortpath})) { 
+	print "$fullpath\n";
+    } 
+    else { 
+	$errors++;
+	warn "$0: path unavailable in %INC\n";
+    }
+} 
+
+exit ($errors != 0);
+
+__END__
+
+=head1 NAME
+
+pmpath - show full path to a perl module
+
+=head1 SYNOPSIS
+
+pmpath module ...
+
+=head1 DESCRIPTION
+
+For each module name given as an argument, produces its full path on
+the standard output, one per line.
+
+=head1 EXAMPLES
+
+    $ pmpath CGI
+    /usr/local/devperl/lib/5.00554/CGI.pm
+
+    $ filsperl -S pmpath IO::Socket CGI::Carp
+    /usr/local/filsperl/lib/5.00554/i686-linux-thread/IO/Socket.pm
+    /usr/local/filsperl/lib/5.00554/CGI/Carp.pm
+
+    $ oldperl -S pmpath CGI CGI::Imagemap
+    /usr/lib/perl5/CGI.pm
+    /usr/lib/perl5/site_perl/CGI/Imagemap.pm
+
+=head1 SEE ALSO
+
+pmdesc(1),
+pmvers(1),
+pmcat(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

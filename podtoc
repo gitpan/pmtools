@@ -1,0 +1,71 @@
+#!/usr/bin/env perl
+# podtoc -- show outline of pods
+# tchrist@perl.com
+
+$/ = '';
+
+$inpod = 0;
+while (<>) {
+    print "$ARGV\n" if $. == 1;
+    if ($inpod && /^=cut/) {
+	$inpod = 0;
+	next;
+    } 
+
+    if (! $inpod && /^=(?!cut)\w+/) {
+	$inpod = 1;
+    } 
+
+    if ($inpod) {
+	next unless /^=(?:head|item)/;
+	s/=head(\d)/'    ' x ( $1 - 1 )/e;
+	s/=item/     * /;
+	s/\n+$/\n/;
+	print;
+    } 
+
+
+} continue {
+
+    if (eof) {
+	$inpod = 0;
+	close ARGV;
+    }
+
+} 
+
+__END__
+
+=head1 NAME
+
+podtoc - show outline of pods
+
+=head1 DESCRIPTION
+
+This program shows the structure of one or more pod documents.
+
+=head1 EXAMPLES
+
+    $ podtoc `pmpath CGI`
+     NAME
+     SYNOPSIS
+     ABSTRACT
+     DESCRIPTION
+	 PROGRAMMING STYLE
+	 CALLING CGI.PM ROUTINES
+	 *  1. Use another name for the argument, if one is available.  For
+	    example, -value is an alias for -values.
+	 *  2. Change the capitalization, e.g. -Values
+    (etc)
+
+=head1 SEE ALSO
+
+pod2man(1), perlpod(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

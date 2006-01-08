@@ -1,0 +1,46 @@
+#!/usr/bin/env perl
+# faqpods - print out the paths to the faqs
+# 
+# this is a perl program not a shell script
+# so that we can use the correct perl 
+
+open(PROG, "$^X -S basepods |") || die "can't fork: $!";
+while (<PROG>) {
+    print if /perlfaq/;
+} 
+
+__END__
+
+=head1 NAME
+
+faqpods - print out pod paths for the standard perl faqs
+
+=head1 DESCRIPTION
+
+This program uses your configuration's C<installprivlib> directory
+to look up the full paths to those pod pages.  Any files in that
+directory whose names start in C<perlfaq> will be printed to the standard
+output, one per line.  This is normally used in backticks to produce
+a list of filenames for other commands.
+
+=head1 EXAMPLES
+
+    $ podgrep typeglob `faqpods`
+    ....
+
+You can also run this using alternate perl binaries, like so:
+
+    $ podgrep -i thread `filsperl faqpods`
+    ....
+
+=head1 SEE ALSO
+
+basepods(1), modpods(1), pods(1), sitepod(1), podpath(1), and stdpod(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

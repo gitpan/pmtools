@@ -1,0 +1,54 @@
+#!/usr/bin/env perl
+# pmdirs -- print the perl module path, newline separated
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+
+for (@INC) {
+    print $_, "\n";
+} 
+
+__END__
+
+=head1 NAME
+
+pmdirs - print out module directories
+
+=head1 DESCRIPTION
+
+This just prints out the current @INC path, one directory per line.
+This is for people who don't want to parse through C<perl -V> output or
+hack up their own calls to C<perl -e>.
+
+=head1 EXAMPLES
+
+    $ pmdirs
+    /home/tchrist/perllib/i686-linux
+    /home/tchrist/perllib
+    /usr/local/devperl/lib/5.00554/i686-linux
+    /usr/local/devperl/lib/5.00554
+    /usr/local/devperl/lib/site_perl/5.00554/i686-linux
+    /usr/local/devperl/lib/site_perl/5.00554
+    .
+
+This also works for alternate version of Perl:
+
+    $ filsperl -S pmdirs
+    /home/tchrist/perllib
+    /usr/local/filsperl/lib/5.00554/i686-linux-thread
+    /usr/local/filsperl/lib/5.00554
+    /usr/local/filsperl/lib/site_perl/5.00554/i686-linux-thread
+    /usr/local/filsperl/lib/site_perl/5.00554
+    .
+
+=head1 SEE ALSO
+
+perlrun(1), perlvar(1), lib(3)
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

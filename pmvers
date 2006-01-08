@@ -1,0 +1,77 @@
+#!/usr/bin/env perl
+# pmvers -- print out a module's version, if findable
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+
+$errors = 0;
+
+for $module (@ARGV) {
+    eval "require $module";
+    if ($@) {
+	$@ =~ s/at \(eval.*$//;
+	warn "$0: $@";
+	$errors++;
+	next;
+    } 
+    print "$module: " if @ARGV > 1;
+    if (defined($version = $module->VERSION())) { 
+	print "$version\n";
+    } 
+    else { 
+	$errors++;
+	if (@ARGV > 1) {
+	    print "unknown version\n";
+	} 
+	else {
+	    warn "$0: unknown version for module `$module'\n";
+	} 
+    }
+} 
+
+exit ($errors != 0);
+
+
+__END__
+
+=head1 NAME
+
+pmvers - print out a module's version
+
+=head1 DESCRIPTION
+
+Given one or more module names, show the version number if present.
+If more than one argument is given, the name of the module will also
+be printed.  Not all modules define version numbers, however.
+
+=head1 EXAMPLES
+
+    $ pmvers CGI
+    2.46
+
+    $ pmvers IO::Socket Text::Parsewords
+    IO::Socket: 1.25
+    Text::ParseWords: 3.1
+
+    $ oldperl -S pmvers CGI
+    2.42
+
+    $ filsperl -S pmvers CGI
+    2.46
+
+    $ pmvers Devel::Loaded
+    pmvers: unknown version for module `Devel::Loaded'
+
+h=ead1 SEE ALSO
+
+pmdesc(1),
+pmpath(1),
+pmcat(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

@@ -1,0 +1,64 @@
+#!/usr/bin/env perl
+# pman -- show a module's man page
+# tchrist@perl.com
+
+BEGIN { $^W = 1 }
+BEGIN { die "usage: $0 module ...\n" unless @ARGV }
+
+use FindBin qw($Bin);
+
+$errors = 0;
+
+unless ($pager = $ENV{PAGER}) {
+    require Config;
+    $pager = $Config::Config{"pager"} || "more";
+} 
+
+for $module (@ARGV) { 
+    my $path =  `$Bin/pmpath $module`;
+    if ($?) {
+	$errors++;
+	next;
+    } 
+    chomp $path;
+    system "pod2text $path | $pager";
+    $errors += ($? != 1);
+}
+
+exit($errors != 0);
+
+__END__
+
+=head1 NAME
+
+pman - show a module's man page
+
+=head1 DESCRIPTION
+
+Send a module's pod through pod2text and your pager.
+
+This is mostly here for people too lazy to type
+
+    $ pod2text `pmpath CGI` | $PAGER
+
+=head1 EXAMPLES
+
+    $ pman CGI
+    $ pman Curses
+
+Or running under different versions of Perl: 
+
+    $ oldperl -S pman CGI
+    $ filsperl -S pman Threads
+
+=head1 SEE ALSO
+
+pod2text(1), perlpod(1), pod2man(1), pod2html(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

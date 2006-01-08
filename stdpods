@@ -1,0 +1,42 @@
+#!/usr/bin/env perl
+# stdpods - print out the paths to the modules
+#           that this site added
+# 
+# this is a perl program not a shell script
+# so that we can use the correct perl 
+
+system("$^X -S basepods");
+open(PROG, "$^X -S modpods |") || die "can't fork: $!";
+while (<PROG>) {
+    print unless /site_perl/;
+} 
+close PROG;
+
+
+__END__
+
+=head1 NAME
+
+stdpods - print out the paths to the modules that came with Perl
+
+=head1 DESCRIPTION
+
+This program shows the paths to module pods that are I<not> in 
+the I<site_perl> directories.  This is the documentation that
+came with the standard system.
+
+=head1 EXAMPLES
+
+    $ podgrep closure `stdpods`
+
+=head1 SEE ALSO
+
+podgrep(1), faqpods(1), modpods(1), pods(1), podpath(1), and sitepod(1).
+
+=head1 AUTHOR and COPYRIGHT
+
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it 
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.
