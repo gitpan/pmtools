@@ -1,0 +1,7 @@
+v1.01  2006-03-21 21:33:52 EST
+  - Two sets of patches from Jose Pedro Oliveira:
+    1. Added missing pmeth to Makefile.PL.
+    2. "$mod" was partially renamed to "$module" in my copy; this
+       patch restores it to "$mod".
+  - Added Changes and TODO files.
+  - Updated MANIFEST with Changes and TODO.

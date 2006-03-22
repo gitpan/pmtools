@@ -8,7 +8,7 @@ BEGIN { die "usage: $0 module ...\n" unless @ARGV }
 $errors = 0;
 
 for $module (@ARGV) { 
-    eval "require $module";
+    eval "local \$^W = 0; require $module";
     if ($@) {
         $@ =~ s/at \(eval.*$//;
         warn "$0: $@";

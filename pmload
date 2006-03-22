@@ -8,7 +8,7 @@ BEGIN { die "usage: $0 module\n" unless @ARGV == 1 }
 %seen = %INC;
 
 $module = shift;
-eval "require $module";
+eval "local \$^W = 0; require $module";
 
 if ($@) {
     $@ =~ s/at \(eval.*$//;

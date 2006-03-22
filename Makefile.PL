@@ -4,7 +4,7 @@ WriteMakefile(
 	NAME => "pmtools",
         DISTNAME => "pmtools",
 	EXE_FILES => [  basepods, faqpods, modpods, pfcat, plxload,
-			pmall, pman, pmcat, pmdesc, pmdirs, pmexp,
+			pmall, pman, pmcat, pmdesc, pmdirs, pmeth, pmexp,
 			pmfunc, pminst, pmload, pmls, pmpath, pmvers,
 			podgrep, podpath, pods, podtoc, sitepods,
 			stdpods ],

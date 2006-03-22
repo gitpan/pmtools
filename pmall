@@ -132,7 +132,7 @@ sub getversion_internal {
     # This should really use system(), because otherwise we bloat.
     my $mod = shift;
     local $SIG{__WARN__} = sub {};
-    eval "require $mod";
+    eval "local \$^W = 0; require $mod";
     if ($@) {
 	warn "Cannot require $mod -- $@\n"
 	    if $opt_v;
