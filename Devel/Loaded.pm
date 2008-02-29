@@ -3,7 +3,7 @@
 
 package Devel::Loaded;
 
-$VERSION = 1;
+$VERSION = '1.10';
 
 BEGIN { %Seen = %INC } 
 
@@ -59,10 +59,21 @@ This will also catch run-time loads:
 The I<plxload> and the I<pmload> programs, which use
 this technique.
 
-=head1 AUTHOR and COPYRIGHT
+=head1 AUTHORS and COPYRIGHTS
 
-Copyright (c) 1999 Tom Christiansen
+Copyright (C) 1999 Tom Christiansen.
 
-This is free software.  You may modify it and distribute it 
-under the Perl's Artistic Licence.  Modified versions must be
-clearly indicated.
+Copyright (C) 2006-2008 Mark Leighton Fisher.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of either:
+(a) the GNU General Public License as published by the Free
+Software Foundation; either version 1, or (at your option) any
+later version, or
+(b) the Perl "Artistic License".
+(This is the Perl 5 licensing scheme.)
+
+Please note this is a change from the
+original pmtools-1.00 (still available on CPAN),
+as pmtools-1.00 were licensed only under the
+Perl "Artistic License".

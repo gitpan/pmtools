@@ -1,4 +1,10 @@
-v1.01  2006-03-21 21:33:52 EST
+v1.10  2008-01-18 06:57:21 EST  Mark Leighton Fisher
+  - Added copyrights in my name as well as Tom Christiansen.
+  - Changed to dual-license like Perl: GNU and Perl Artistic.
+    This was at the request of the Fedora project, as they
+    wanted a version of pmtools licensed under GNU.
+
+v1.01  2006-03-21 21:33:52 EST  Mark Leighton Fisher
   - Two sets of patches from Jose Pedro Oliveira:
     1. Added missing pmeth to Makefile.PL.
     2. "$mod" was partially renamed to "$module" in my copy; this
