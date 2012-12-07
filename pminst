@@ -20,9 +20,11 @@ $pattern =~ s,::,/,g;
 
 no lib '.';
 
-use vars qw($opt_l $opt_s);
+use vars qw($opt_l $opt_s %seen);
 
 for $startdir (@INC) { 
+    next if (!-d $startdir);
+
     find(\&wanted, $startdir);
 }
 
@@ -32,7 +34,16 @@ sub wanted {
 	$File::Find::prune = 1;
 	return;
     }
-    return unless /\.pm$/;
+    # Some expansions of @INC have subdirs of other @INC directories in them;
+    # to wit:
+    # /opt/perl/lib/site_perl/5.8.8
+    # /opt/perl/lib/site_perl
+    # This will result in output, when looking for module Foo:
+    # Foo
+    # 5.8.8:Foo
+    # We add full module paths for found modules to %seen so
+    # we can skip them the next time around.
+    return unless ( /\.pm$/ and not exists $seen{$File::Find::name} );
     local $_ = $File::Find::name;
     ($tmpname = $_) =~ s{^\Q$startdir/}{};
     return unless $tmpname =~ /$pattern/o;
@@ -47,6 +58,7 @@ sub wanted {
 	print "$startdir " if $opt_s;
     } 
 
+    $seen{$File::Find::name}=1;
     print $_, "\n";
 } 
 

@@ -52,6 +52,13 @@ pmall  - get all installed modules pmdesc descriptions
 
 =========================================================
 
+pmcheck   - check that Perl is set up correctly for Perl modules
+
+    $ pmcheck
+    '/usr/lib/perl5/site_perl/5.8' is in @INC but does not exist
+
+=========================================================
+
 pmdirs    - print the perl module path, newline separated
 
     $ pmdirs
