@@ -1,65 +1,62 @@
 #!/usr/bin/env perl
-# pman -- show a module's man page
-# tchrist@perl.com
+# pmcat -- page a module file
+
+# ------ pragmas
+use strict;
+use warnings;
+use pmtools;
+
+our $VERSION = $pmtools::VERSION;
+
+# ------ define variables
+my $pager = undef;	# $ENV{PAGER} - output paging program
 
 BEGIN { $^W = 1 }
 BEGIN { die "usage: $0 module ...\n" unless @ARGV }
 
 use FindBin qw($Bin);
 
-$errors = 0;
-
 unless ($pager = $ENV{PAGER}) {
     require Config;
     $pager = $Config::Config{"pager"} || "more";
 } 
 
-for $module (@ARGV) { 
-    my $path =  `$Bin/pmpath $module`;
-    if ($?) {
-	$errors++;
-	next;
-    } 
-    chomp $path;
-    system "pod2text $path | $pager";
-    $errors += ($? != 1);
-}
-
-exit($errors != 0);
+exec "$pager `$^X -S $Bin/pmpath @ARGV`";
 
 __END__
 
 =head1 NAME
 
-pman - show a module's man page
+pmcat - page through a module file
 
 =head1 DESCRIPTION
 
-Send a module's pod through pod2text and your pager.
+Given a module name, figure out the path name and send
+that to the user's pager.
 
-This is mostly here for people too lazy to type
+    $ pmcat CGI
 
-    $ pod2text `pmpath CGI` | $PAGER
+This works also on alternate installed versions of Perl:
 
-=head1 EXAMPLES
+    $ oldperl -S pmcat strict
 
-    $ pman CGI
-    $ pman Curses
+    $ filsperl -S pmcat Threads
 
-Or running under different versions of Perl: 
+This command is mostly here for people too lazy to type
 
-    $ oldperl -S pman CGI
-    $ filsperl -S pman Threads
+    $ more `pmpath CGI` 
 
 =head1 SEE ALSO
 
-pod2text(1), perlpod(1), pod2man(1), pod2html(1).
+pmpath(1)
 
 =head1 AUTHORS and COPYRIGHTS
 
 Copyright (C) 1999 Tom Christiansen.
 
-Copyright (C) 2006-2008 Mark Leighton Fisher.
+Copyright (C) 2006-2013 Mark Leighton Fisher.
+
+=head1 LICENSE
 
 This is free software; you can redistribute it and/or modify it
 under the terms of either:

@@ -1,11 +1,12 @@
 #!/usr/bin/env perl
 # pmall -- show all installed versions and descs
-# tchrist@perl.com
 
 use strict;
+use warnings;
 use File::Find	qw(find);
 use Getopt::Std	qw(getopts);
 use Carp;
+use pmtools;
 
 use vars (
     q!$opt_v!,		# give debug info
@@ -13,6 +14,8 @@ use vars (
     q!$opt_a!,		# include relative paths
     q!$opt_s!,		# sort output within each directory
 );
+
+our $VERSION = $pmtools::VERSION;
 
 $| = 1;
 
@@ -222,7 +225,9 @@ pmvers(1)
 
 Copyright (C) 1999 Tom Christiansen.
 
-Copyright (C) 2006-2008 Mark Leighton Fisher.
+Copyright (C) 2006-2013 Mark Leighton Fisher.
+
+=head1 LICENSE
 
 This is free software; you can redistribute it and/or modify it
 under the terms of either:

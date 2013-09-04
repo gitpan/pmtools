@@ -1,47 +1,56 @@
 #!/usr/bin/env perl
-# faqpods - print out the paths to the faqs
+# sitepods - print out the paths to the modules
+#           that this site added
 # 
 # this is a perl program not a shell script
 # so that we can use the correct perl 
 
-open(PROG, "$^X -S basepods |") || die "can't fork: $!";
+# ------ pragmas
+use strict;
+use warnings;
+use pmtools;
+
+our $VERSION = $pmtools::VERSION;
+
+open(PROG, "$^X -S modpods |") || die "can't fork: $!";
+
 while (<PROG>) {
-    print if /perlfaq/;
+    print if /site_perl/;
 } 
 
 __END__
 
 =head1 NAME
 
-faqpods - print out pod paths for the standard perl faqs
+sitepods - print out the paths to the modules that this site added
 
 =head1 DESCRIPTION
 
-This program uses your configuration's C<installprivlib> directory
-to look up the full paths to those pod pages.  Any files in that
-directory whose names start in C<perlfaq> will be printed to the standard
-output, one per line.  This is normally used in backticks to produce
-a list of filenames for other commands.
+This program shows the paths to module pods that are in 
+the I<site_perl> directories.
 
 =head1 EXAMPLES
 
-    $ podgrep typeglob `faqpods`
-    ....
+    $ sitepods
+    /usr/local/devperl/lib/site_perl/5.00554/i686-linux/XML/Parser/Expat.pm
+    /usr/local/devperl/lib/site_perl/5.00554/i686-linux/XML/Parser.pm
 
 You can also run this using alternate perl binaries, like so:
 
-    $ podgrep -i thread `filsperl faqpods`
+    $ oldperl -S sitepods  
     ....
 
 =head1 SEE ALSO
 
-basepods(1), modpods(1), pods(1), sitepod(1), podpath(1), and stdpod(1).
+faqpods(1), modpods(1), pods(1), podpath(1), and stdpod(1).
 
 =head1 AUTHORS and COPYRIGHTS
 
 Copyright (C) 1999 Tom Christiansen.
 
-Copyright (C) 2006-2008 Mark Leighton Fisher.
+Copyright (C) 2006-2013 Mark Leighton Fisher.
+
+=head1 LICENSE
 
 This is free software; you can redistribute it and/or modify it
 under the terms of either:

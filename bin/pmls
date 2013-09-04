@@ -1,8 +1,17 @@
 #!/usr/bin/env perl
 # pmls -- show date stamp of module
-# tchrist@perl.com
+
+# ------ pragmas
+use strict;
+use warnings;
+use pmtools;
+
+our $VERSION = $pmtools::VERSION;
 
 BEGIN { $^W = 1 }
+
+# ------ define variable
+my $module = undef;	# module name
 
 use FindBin qw($Bin);
 
@@ -44,7 +53,9 @@ pmpath(1)
 
 Copyright (C) 1999 Tom Christiansen.
 
-Copyright (C) 2006-2008 Mark Leighton Fisher.
+Copyright (C) 2006-2013 Mark Leighton Fisher.
+
+=head1 LICENSE
 
 This is free software; you can redistribute it and/or modify it
 under the terms of either:
