@@ -36,6 +36,7 @@ lib/Devel/Loaded.pm
 lib/pmtools.pm
 t/basepods.t
 t/faqpods.t
+t/head.pl
 t/modpods.t
 t/pfcat.t
 t/plxload.t

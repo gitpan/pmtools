@@ -12,10 +12,8 @@ my $output = undef;	# output from pman
 $ENV{"PATH"} = 'blib/script:' . $ENV{"PATH"};
 
 eval {
-    $output = `bin/pman Scalar::Util 2>&1`;
+    $output = `bin/pman Carp 2>&1`;
 };
 
-is($?,        256,
-	"pman runs");
-like($output, qr/NAME.*Scalar::Util - A selection.*SYNOPSIS.*DESCRIPTION/ms,
-	"found Scalar::Util");
+is($?,        256,                                          "pman runs");
+like($output, qr/NAME.*[Cc]arp - \w.*SYNOPSIS.*DESCRIPTION/ms, "found Carp");
