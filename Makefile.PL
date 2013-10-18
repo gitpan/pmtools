@@ -47,7 +47,7 @@ my %WriteMakefileArgs = (
   "NAME" => "pmtools",
   "PREREQ_PM" => {},
   "TEST_REQUIRES" => {},
-  "VERSION" => "1.51",
+  "VERSION" => "1.52",
   "test" => {
     "TESTS" => "t/*.t"
   }
