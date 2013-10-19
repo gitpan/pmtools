@@ -14,7 +14,7 @@ meta-spec:
 name: pmtools
 requires:
   perl: 5.008008
-version: 1.53
+version: 1.54
 x_contributors:
   - 'Mark Leighton Fisher <fisherscreek.consulting@gmail.com>'
   - 'Mark Leighton Fisher <markleightonfisher@snoopy.local>'

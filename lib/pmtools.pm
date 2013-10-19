@@ -4,7 +4,7 @@ use strict;
 use warnings;
 package pmtools;
 
-our $VERSION = '1.53';
+our $VERSION = '1.54';
 
 1;
 
