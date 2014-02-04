@@ -3,7 +3,6 @@ LICENSE
 MANIFEST
 META.yml
 Makefile.PL
-Makefile.lame
 README
 TODO
 bin/basepods
@@ -37,6 +36,7 @@ lib/pmtools.pm
 t/basepods.t
 t/faqpods.t
 t/head.pl
+t/lib/pmtools.t
 t/modpods.t
 t/pfcat.t
 t/plxload.t
